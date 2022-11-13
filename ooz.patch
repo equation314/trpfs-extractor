@@ -1,0 +1,62 @@
+diff --git a/kraken.cpp b/kraken.cpp
+index 9be3f29..49362f9 100644
+--- a/kraken.cpp
++++ b/kraken.cpp
+@@ -4093,6 +4093,7 @@ bool Kraken_DecodeStep(struct KrakenDecoder *dec,
+     n = Kraken_DecodeQuantum(dst_start + offset, dst_start + offset + dst_bytes_left, dst_start,
+                          src, src + qhdr.compressed_size,
+                          dec->scratch, dec->scratch + dec->scratch_size);
++/*
+   } else if (dec->hdr.decoder_type == 5) {
+     if (dec->hdr.restart_decoder) {
+       dec->hdr.restart_decoder = false;
+@@ -4116,6 +4117,7 @@ bool Kraken_DecodeStep(struct KrakenDecoder *dec,
+     n = Leviathan_DecodeQuantum(dst_start + offset, dst_start + offset + dst_bytes_left, dst_start,
+                                 src, src + qhdr.compressed_size,
+                                 dec->scratch, dec->scratch + dec->scratch_size);
++*/
+   } else {
+     return false;
+   }
+@@ -4127,7 +4129,11 @@ bool Kraken_DecodeStep(struct KrakenDecoder *dec,
+   dec->dst_used = dst_bytes_left;
+   return true;
+ }
+-  
++
++extern "C" {
++  int Kraken_Decompress(const byte *src, size_t src_len, byte *dst, size_t dst_len);
++}
++
+ int Kraken_Decompress(const byte *src, size_t src_len, byte *dst, size_t dst_len) {
+   KrakenDecoder *dec = Kraken_Create();
+   int offset = 0;
+@@ -4150,6 +4156,7 @@ FAIL:
+   return -1;
+ }
+ 
++/*
+ // The decompressor will write outside of the target buffer.
+ #define SAFE_SPACE 64
+ 
+@@ -4477,4 +4484,4 @@ int main(int argc, char *argv[]) {
+     fprintf(stderr, "%d files verified OK!\n", nverify);
+   return 0;
+ }
+-
++*/
+diff --git a/stdafx.h b/stdafx.h
+index a24d39f..ec766f6 100644
+--- a/stdafx.h
++++ b/stdafx.h
+@@ -34,10 +34,6 @@ static inline uint32_t _rotl(uint32_t x, int n) {
+ #include <xmmintrin.h>
+ #endif
+ 
+-#pragma warning (disable: 4244)
+-#pragma warning (disable: 4530) // c++ exception handler used without unwind semantics
+-#pragma warning (disable: 4018) // signed/unsigned mismatch
+-
+ // TODO: reference additional headers your program requires here
+ typedef uint8_t byte;
+ typedef uint8_t uint8;
