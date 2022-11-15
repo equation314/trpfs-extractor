@@ -5,5 +5,5 @@ You Know What
 ## Build & Run
 
 ```
-cargo run --release -- data.trpfd data.trpfs -e
+cargo run --release --example extractor -- data.trpfd data.trpfs -e
 ```

@@ -1,12 +1,8 @@
-mod kraken;
-mod trpfd;
-mod trpfs;
-mod utils;
+use std::path::PathBuf;
 
 use clap::Parser;
-use std::path::PathBuf;
-use trpfd::Trpfd;
-use trpfs::Trpfs;
+use trpfs_extractor::Trpfd;
+use trpfs_extractor::Trpfs;
 
 #[derive(Parser, Debug)]
 struct Cli {

@@ -1,8 +1,16 @@
 diff --git a/kraken.cpp b/kraken.cpp
-index 9be3f29..49362f9 100644
+index 9be3f29..410c2ca 100644
 --- a/kraken.cpp
 +++ b/kraken.cpp
-@@ -4093,6 +4093,7 @@ bool Kraken_DecodeStep(struct KrakenDecoder *dec,
+@@ -17,7 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
+ #include "stdafx.h"
+-#include <sys/stat.h>
+ 
+ // Header in front of each 256k block
+ typedef struct KrakenHeader {
+@@ -4093,6 +4092,7 @@ bool Kraken_DecodeStep(struct KrakenDecoder *dec,
      n = Kraken_DecodeQuantum(dst_start + offset, dst_start + offset + dst_bytes_left, dst_start,
                           src, src + qhdr.compressed_size,
                           dec->scratch, dec->scratch + dec->scratch_size);
@@ -10,7 +18,7 @@ index 9be3f29..49362f9 100644
    } else if (dec->hdr.decoder_type == 5) {
      if (dec->hdr.restart_decoder) {
        dec->hdr.restart_decoder = false;
-@@ -4116,6 +4117,7 @@ bool Kraken_DecodeStep(struct KrakenDecoder *dec,
+@@ -4116,6 +4116,7 @@ bool Kraken_DecodeStep(struct KrakenDecoder *dec,
      n = Leviathan_DecodeQuantum(dst_start + offset, dst_start + offset + dst_bytes_left, dst_start,
                                  src, src + qhdr.compressed_size,
                                  dec->scratch, dec->scratch + dec->scratch_size);
@@ -18,7 +26,7 @@ index 9be3f29..49362f9 100644
    } else {
      return false;
    }
-@@ -4127,7 +4129,11 @@ bool Kraken_DecodeStep(struct KrakenDecoder *dec,
+@@ -4127,7 +4128,11 @@ bool Kraken_DecodeStep(struct KrakenDecoder *dec,
    dec->dst_used = dst_bytes_left;
    return true;
  }
@@ -31,7 +39,7 @@ index 9be3f29..49362f9 100644
  int Kraken_Decompress(const byte *src, size_t src_len, byte *dst, size_t dst_len) {
    KrakenDecoder *dec = Kraken_Create();
    int offset = 0;
-@@ -4150,6 +4156,7 @@ FAIL:
+@@ -4150,6 +4155,7 @@ FAIL:
    return -1;
  }
  
@@ -39,7 +47,7 @@ index 9be3f29..49362f9 100644
  // The decompressor will write outside of the target buffer.
  #define SAFE_SPACE 64
  
-@@ -4477,4 +4484,4 @@ int main(int argc, char *argv[]) {
+@@ -4477,4 +4483,4 @@ int main(int argc, char *argv[]) {
      fprintf(stderr, "%d files verified OK!\n", nverify);
    return 0;
  }
